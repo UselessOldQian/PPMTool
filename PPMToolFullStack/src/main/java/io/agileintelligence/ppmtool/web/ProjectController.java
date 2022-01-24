@@ -30,13 +30,9 @@ public class ProjectController {
 
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
-        System.out.println("get project!!!!!!!!!!!!");
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap!=null) {
-            System.out.println(errorMap.getBody());
-            return errorMap;
-        }
+        if(errorMap!=null) return errorMap;
 
         Project project1 = projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
@@ -53,10 +49,7 @@ public class ProjectController {
 
 
     @GetMapping("/all")
-    public Iterable<Project> getAllProjects(){
-        System.out.println("alll--------------");
-        return projectService.findAllProjects();
-    }
+    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
 
 
     @DeleteMapping("/{projectId}")
